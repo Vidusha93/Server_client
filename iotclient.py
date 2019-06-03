@@ -19,7 +19,7 @@ for server to inform the client to activate the actuators if needed.
 <response message> ::= <response object in JSON format with UTF-8 encoding> <LF>
 
 <response object> ::=
-    {   'status': 'OK' | 'ERROR <error msg>',
+    {   'status': 'OK' | 'ERROR <error msg>', 
         'deviceid': <device id>
         'msgid': <messge id>
       [ 'activate': {'aircon': 'ON', 'led': 'OFF' } ]  # optional

@@ -5,7 +5,10 @@ from django.views.generic import View
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import json
 
+with open("data_file.json", "r") as read_file:
+        dataSet = json.load(read_file)
 
 User = get_user_model()
 
@@ -29,8 +32,8 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         qs_count = User.objects.all().count()
-        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
-        default_items = [qs_count, 23, 2, 3, 12, 2]
+        labels = ["Users", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+        default_items = dataSet["temperature"]
         data = {
                 "labels": labels,
                 "default": default_items,

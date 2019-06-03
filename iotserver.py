@@ -1,6 +1,10 @@
 import socketserver, json
 import logging
 
+temperatureList = []
+humidityList = []
+data = { "temperature": [], "humidity": [] }
+
 class IoTRequestHandler(socketserver.StreamRequestHandler):
     def handle(self):
         client = self.request.getpeername()
@@ -33,7 +37,16 @@ class IoTRequestHandler(socketserver.StreamRequestHandler):
 
             # Insert sensor data into DB tables
             # and retrieve information to control the actuators
-            pass
+            temperatureList.append(temperature)
+            humidityList.append(humidity)
+            if len(temperatureList) > 10:
+                temperatureList.pop(0)
+                humidityList.pop(0)
+
+            data["temperature"] = temperatureList
+            data["humidity"] = humidityList
+            with open("charts/data_file.json", "w") as write_file:
+                json.dump(data, write_file)
 
             # apply rules to control actuators
             activate = {}
@@ -65,7 +78,7 @@ class IoTRequestHandler(socketserver.StreamRequestHandler):
 logging.basicConfig(filename='', level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 
-serv_addr = ("", 10007)
+serv_addr = ("192.168.0.2", 10007)
 with socketserver.ThreadingTCPServer(serv_addr, IoTRequestHandler) as server:
     logging.info('Server starts: {}'.format(serv_addr))
     server.serve_forever()
