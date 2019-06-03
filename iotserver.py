@@ -39,13 +39,13 @@ class IoTRequestHandler(socketserver.StreamRequestHandler):
             # and retrieve information to control the actuators
             temperatureList.append(temperature)
             humidityList.append(humidity)
-            if len(temperatureList) > 10:
+            if len(temperatureList) > 12:
                 temperatureList.pop(0)
                 humidityList.pop(0)
 
             data["temperature"] = temperatureList
             data["humidity"] = humidityList
-            with open("charts/data_file.json", "w") as write_file:
+            with open("data_file.json", "w") as write_file:
                 json.dump(data, write_file)
 
             # apply rules to control actuators
