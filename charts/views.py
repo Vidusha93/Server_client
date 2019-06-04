@@ -34,9 +34,11 @@ class ChartData(APIView):
         qs_count = User.objects.all().count()
         labels = ["Users", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
         default_items = dataSet["temperature"]
+        default_items2 = dataSet["humidity"]
         data = {
                 "labels": labels,
                 "default": default_items,
+                "default2": default_items2,
         }
         return Response(data)
 

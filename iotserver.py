@@ -1,9 +1,13 @@
 import socketserver, json
 import logging
 
-temperatureList = []
-humidityList = []
-data = { "temperature": [], "humidity": [] }
+
+json_data = open('data_file.json')
+dataSet = json.load(json_data)
+json_data.close()
+temperatureList = dataSet["temperature"]
+humidityList = dataSet["humidity"]
+data = dataSet
 
 class IoTRequestHandler(socketserver.StreamRequestHandler):
     def handle(self):
@@ -78,7 +82,7 @@ class IoTRequestHandler(socketserver.StreamRequestHandler):
 logging.basicConfig(filename='', level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(message)s')
 
-serv_addr = ("192.168.0.2", 10007)
+serv_addr = ("192.168.0.35", 10007)
 with socketserver.ThreadingTCPServer(serv_addr, IoTRequestHandler) as server:
     logging.info('Server starts: {}'.format(serv_addr))
     server.serve_forever()
