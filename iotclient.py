@@ -19,7 +19,7 @@ for server to inform the client to activate the actuators if needed.
 <response message> ::= <response object in JSON format with UTF-8 encoding> <LF>
 
 <response object> ::=
-    {   'status': 'OK' | 'ERROR <error msg>', 
+    {   'status': 'OK' | 'ERROR <error msg>',
         'deviceid': <device id>
         'msgid': <messge id>
       [ 'activate': {'aircon': 'ON', 'led': 'OFF' } ]  # optional
@@ -105,8 +105,8 @@ class IoTClient:
 
     def run(self):
         # Report sensors' data forever
-        gen_temp = gen_data(mean=20, deviation=20, samples=10)
-        gen_humid = gen_data(mean=50, deviation=15, samples=10)
+        gen_temp = gen_data(mean=20, deviation=20, samples=100)
+        gen_humid = gen_data(mean=50, deviation=15, samples=100)
         msgid = 0
 
         while True:

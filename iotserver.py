@@ -43,7 +43,7 @@ class IoTRequestHandler(socketserver.StreamRequestHandler):
             # and retrieve information to control the actuators
             temperatureList.append(temperature)
             humidityList.append(humidity)
-            if len(temperatureList) > 12:
+            if len(temperatureList) > 21:
                 temperatureList.pop(0)
                 humidityList.pop(0)
 
